@@ -1,1 +1,2 @@
-# Tetris\n## A classic tile-matching game
+# Tetris
+## A classic tile-matching game

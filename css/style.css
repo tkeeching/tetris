@@ -11,5 +11,8 @@
 .game-board div {
   width: 20px;
   height: 20px;
+}
+
+.tetromino {
   background-color: blueviolet;
 }

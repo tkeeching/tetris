@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let currentPosition = 3;
   let selectTetromino = Math.floor(Math.random() * tetrominoes.length);
-  let tetrominoRotation = Math.floor(Math.random() * lTetromino.length);
+  let tetrominoRotation = 0;
   let currentTetromino = tetrominoes[selectTetromino][tetrominoRotation];
 
   function draw() {
@@ -89,18 +89,27 @@ document.addEventListener('DOMContentLoaded', () => {
           break;
       }
     })
-    currentPosition += rowHeight;
+  }
+  
+  function moveDown() {
+      undraw();
+      currentPosition += rowHeight;
+      draw();
+      freeze();
   }
 
-  function moveDown() {
-    if (currentPosition < 160) {
-      undraw();
+  function freeze() {
+    if (currentTetromino.some(index => cells[currentPosition + index + rowHeight].classList.contains('taken'))) {
+      currentTetromino.forEach(index => cells[currentPosition + index].classList.add('taken'))
+      // start a new tetromino falling
+      selectTetromino = Math.floor(Math.random() * tetrominoes.length);
+      currentTetromino = tetrominoes[selectTetromino][tetrominoRotation];
+      currentPosition = 3;
       draw();
     }
   }
 
   draw();
-
-  setInterval(moveDown, 1000);
+  let timerId = setInterval(moveDown, 800);
   
 })

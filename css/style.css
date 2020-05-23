@@ -13,6 +13,23 @@
   height: 20px;
 }
 
-.tetromino {
-  background-color: blueviolet;
+/* tetrominoes */
+.ltetromino {
+  background-color: orange;
+}
+
+.ttetromino {
+  background-color: teal;
+}
+
+.ztetromino {
+  background-color: violet;
+}
+
+.otetromino {
+  background-color: skyblue;
+}
+
+.itetromino {
+  background-color: brown;
 }

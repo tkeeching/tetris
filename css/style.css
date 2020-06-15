@@ -1,10 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+body {
+  box-sizing: border-box;
+  background: url(../images/its_a_trap.jpg);
+  background-size: cover;
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.start-btn {
+  font-family: 'Pacifico', cursive;
+  padding: 10px;
+  font-size: 1.5rem;
+  color: white;
+  background: none;
+  border: none;
+}
+
+.start-btn:hover {
+  cursor: pointer;
+  color: red;
+  transition: all 0.3s ease-out;
+}
+
+.start-btn:focus {
+  outline: none;
+}
+
 /* main */
 main {
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(2, 1fr);
   justify-items: center;
-  width: 40%;
+  width: 40%; */
 }
+
 
 /* game board */
 .game-board {
@@ -15,7 +51,9 @@ main {
   place-items: center;
   width: 220px;
   height: 440px;
-  background-color: khaki;
+  background-color: rgba(30, 30, 30, 0.9);
+  border: 3px solid rgba(128, 128, 128, 0.8);
+  border-radius: 5px;
 }
 
 .game-board div {
@@ -32,7 +70,10 @@ main {
   place-items: center;
   width: 110px;
   height: 110px;
-  background-color: khaki;
+  background-color: rgba(30, 30, 30, 0.9);
+  border: 3px solid rgba(128, 128, 128, 0.8);
+  border-radius: 5px;
+  margin: 20px auto;
 }
 
 .up-next-display div {
@@ -40,28 +81,44 @@ main {
   height: 20px;
 }
 
+
 /* score board */
 .score-board {
 
 }
 
+
 /* tetrominoes */
 .ltetromino {
   background-color: orange;
+  border-radius: 3px;
 }
 
 .ttetromino {
   background-color: teal;
+  border-radius: 3px;
 }
 
 .ztetromino {
   background-color: violet;
+  border-radius: 3px;
 }
 
 .otetromino {
   background-color: skyblue;
+  border-radius: 3px;
 }
 
 .itetromino {
   background-color: brown;
+  border-radius: 3px;
+}
+
+
+@media only screen and (max-width: 900px) {
+  body {
+    background-repeat: no-repeat;
+    background-size: 100vh;
+    background-position: center;
+  }
 }

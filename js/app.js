@@ -134,8 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let xDown, yDown;
   function handleTouch(e) {
-    rotate();
-
     const firstTouch = (e.touches || e.originalEvent.touches)[0];
     xDown = firstTouch.clientX;
     yDown = firstTouch.clientY;
@@ -158,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       if (yDiff > 0) {
-
+        rotate();
       } else {
         moveDown();
       }

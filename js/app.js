@@ -105,7 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // arrowUp key: 38
   // arrowRight key: 39
   // arrowDown key: 40
+  let keyTimerId;
+  let keyPressed = false;
   function control(e) {
+    console.log('key pressed');
     if (e.keyCode === 37) {
       moveLeft();
     } else if (e.keyCode === 38) {
@@ -113,11 +116,33 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (e.keyCode === 39) {
       moveRight();
     } else if (e.keyCode === 40) {
-      moveDown();
+      if (keyPressed) return;
+      keyPressed = true;
+      clearInterval(keyTimerId);
+      keyTimerId = setInterval(moveDown, 50);
     }
   }
 
-  document.addEventListener('keyup', control);
+  function clear(e) {
+    if (e.keyCode === 40) {
+      clearInterval(keyTimerId);
+      keyPressed = false;
+    }
+  }
+
+  document.addEventListener('keydown', control);
+  document.addEventListener('keyup', clear);
+
+  // touch event handlers
+  const msgDisplay = document.querySelector('.up-next-display');
+
+  function handleTouch() {
+    const msg = document.createElement('p');
+    msg.textContent = 'touch detected';
+    msgDisplay.appendChild(msg);
+  }
+
+  document.addEventListener('touchstart', handleTouch, false)
 
   let selectUpNextTetromino = 0;
   function freeze() {
@@ -258,6 +283,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentTetromino.some(index => cells[currentPosition + index].classList.contains('taken'))) {
       scoreBoard.innerHTML = 'end';
       clearInterval(timerId);
+      clearInterval(keyTimerId);
+      console.log(keyTimerId);
     }
   }
 })

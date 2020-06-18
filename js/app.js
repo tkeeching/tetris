@@ -134,12 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keyup', clear);
 
   // touch event handlers
-  const msgDisplay = document.querySelector('.up-next-display');
-
   function handleTouch() {
-    const msg = document.createElement('p');
-    msg.textContent = 'touch detected';
-    msgDisplay.appendChild(msg);
+    moveDown();
   }
 
   document.addEventListener('touchstart', handleTouch, false)

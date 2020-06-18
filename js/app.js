@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const rowHeight = 10;
   let timerId = null;
   let score = 0;
+  let gameStarted = false;
+  let gamePaused = false;
 
   const lTetromino = [  
     [2, rowHeight, rowHeight+1, rowHeight+2], // [6, 14, 15, 16]
@@ -130,16 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  document.addEventListener('keydown', control);
-  document.addEventListener('keyup', clear);
-
-  // touch event handlers
-  function handleTouch() {
-    moveDown();
-  }
-
-  document.addEventListener('touchstart', handleTouch, false)
-
   let selectUpNextTetromino = 0;
   function freeze() {
     if (currentTetromino.some(index => cells[currentPosition + index + rowHeight].classList.contains('taken'))) {
@@ -246,9 +238,23 @@ document.addEventListener('DOMContentLoaded', () => {
       timerId = null;
     } else {
       draw();
+      gameStarted = true;
       timerId = setInterval(moveDown, 1000);
       // selectUpNextTetromino = Math.floor(Math.random() * tetrominoes.length);
-      displayNext();       
+      displayNext(); 
+      
+      if (gameStarted && !gamePaused) {
+
+        document.addEventListener('keydown', control);
+        document.addEventListener('keyup', clear);
+        
+        // touch event handlers
+        function handleTouch() {
+          rotate();
+        }
+        
+        document.addEventListener('touchstart', handleTouch, false)
+      }
     }
   })
 

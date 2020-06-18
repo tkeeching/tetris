@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
           rotate();
         }
         
-        document.addEventListener('touchstart', handleTouch, false)
+        document.addEventListener('touchstart', handleTouch)
       }
     }
   })
@@ -287,6 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
       clearInterval(timerId);
       clearInterval(keyTimerId);
       console.log(keyTimerId);
+      document.removeEventListener('keydown', control);
+      document.removeEventListener('keyup', clear);
+      document.removeEventListener('touchstart', handleTouch);
     }
   }
 })

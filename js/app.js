@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
           rotate();
         }
         
-        document.addEventListener('touchstart', handleTouch)
+        gameBoard.addEventListener('touchstart', handleTouch)
       }
     }
   })
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(keyTimerId);
       document.removeEventListener('keydown', control);
       document.removeEventListener('keyup', clear);
-      document.removeEventListener('touchstart', handleTouch);
+      gameBoard.removeEventListener('touchstart', handleTouch);
     }
   }
 })

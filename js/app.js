@@ -132,6 +132,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  let xDown, yDown;
+  function handleTouch(e) {
+    rotate();
+
+    const firstTouch = (e.touches || e.originalEvent.touches)[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+  }
+
+  function handleSwipe(e) {
+    if (!xDown || !yDown) return;
+
+    const xUp = e.touches[0].clientX;
+    const yUp = e.touches[0].clientY;
+
+    const xDiff = xDown - xUp;
+    const yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      if (xDiff > 0) {
+        moveLeft();
+      } else {
+        moveRight();
+      }
+    } else {
+      if (yDiff > 0) {
+
+      } else {
+        moveDown();
+      }
+    }
+
+    xDown = null;
+    yDown = null;
+  }
+
   let selectUpNextTetromino = 0;
   function freeze() {
     if (currentTetromino.some(index => cells[currentPosition + index + rowHeight].classList.contains('taken'))) {
@@ -248,12 +284,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', control);
         document.addEventListener('keyup', clear);
         
-        // touch event handlers
-        function handleTouch() {
-          rotate();
-        }
-        
-        gameBoard.addEventListener('touchstart', handleTouch)
+        // touch event handlers        
+        gameBoard.addEventListener('touchstart', handleTouch);
+        gameBoard.addEventListener('touchmove', handleSwipe);
       }
     }
   })

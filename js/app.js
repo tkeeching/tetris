@@ -175,9 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
       selectUpNextTetromino = Math.floor(Math.random() * tetrominoes.length);
       currentTetromino = tetrominoes[selectTetromino][tetrominoRotation];
       currentPosition = 3;
+      addScore();
       draw();
       displayNext();
-      addScore();
       gameOver();
     }
   }
@@ -298,12 +298,13 @@ document.addEventListener('DOMContentLoaded', () => {
         score += 10;
         scoreBoard.innerHTML = score;
         rows.forEach(index => {
-          cells[index].classList.remove('taken');
-          cells[index].classList.remove('ltetromino');
-          cells[index].classList.remove('ttetromino');
-          cells[index].classList.remove('ztetromino');
-          cells[index].classList.remove('otetromino');
-          cells[index].classList.remove('itetromino');
+          // cells[index].classList.remove('taken');
+          // cells[index].classList.remove('ltetromino');
+          // cells[index].classList.remove('ttetromino');
+          // cells[index].classList.remove('ztetromino');
+          // cells[index].classList.remove('otetromino');
+          // cells[index].classList.remove('itetromino');
+          cells[index].className = '';
         })
         const cellsRemoved = cells.splice(i, rowHeight);
         cells = cellsRemoved.concat(cells);
@@ -314,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function gameOver() {
     if (currentTetromino.some(index => cells[currentPosition + index].classList.contains('taken'))) {
-      scoreBoard.innerHTML = 'end';
+      scoreBoard.innerHTML = 'game over';
       clearInterval(timerId);
       clearInterval(keyTimerId);
       console.log(keyTimerId);

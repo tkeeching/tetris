@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const gameBoard = document.querySelector('.game-board');
   let cells = Array.from(document.querySelectorAll('.game-board div'));
-  const scoreBoard = document.querySelector('.score-board');
+  const scoreBoard = document.querySelector('.score');
   const startBtn = document.querySelector('.start-btn');
   const rowHeight = 10;
   let timerId = null;

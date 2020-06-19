@@ -36,7 +36,7 @@ body {
 /* main */
 main {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 65px 1fr 65px;
   grid-gap: 2px;
   justify-items: center;
 }
@@ -84,7 +84,21 @@ main {
 
 /* score board */
 .score-board {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(30, 30, 30, 0.9);
+  border: 1px solid rgba(128, 128, 128, 0.8);
+  border-radius: 5px;
+  width: 220px;
+  height: 30px;
+  margin: 2px auto;
   color: white;
+}
+
+.score-board p {
+  font-family: 'Pacifico', cursive;
+  padding: 0 10px;
 }
 
 

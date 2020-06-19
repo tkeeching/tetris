@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const rowHeight = 10;
   let timerId = null;
   let score = 0;
+  let counter = 0;
   let gameStarted = false;
   let gamePaused = false;
+  let interval = 1000;
 
   const lTetromino = [  
     [2, rowHeight, rowHeight+1, rowHeight+2], // [6, 14, 15, 16]
@@ -205,6 +207,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function rotate() {
+    const isAtRightEdge = currentTetromino.some(index => (currentPosition + index) % rowHeight === rowHeight - 1);
+    const isAtLeftEdge = currentTetromino.some(index => (currentPosition + index) % rowHeight === 0);
     undraw();
     tetrominoRotation++;
     if (tetrominoRotation === currentTetromino.length) {  // if rotation gets to 4, make it go back to 0
@@ -212,6 +216,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     currentTetromino = tetrominoes[selectTetromino][tetrominoRotation];
     draw();
+
+    if (isAtLeftEdge) {
+      let exceedLeftEdge = currentTetromino.some(index => (currentPosition + index) % rowHeight === rowHeight - 1);
+      while (exceedLeftEdge) {
+        undraw();
+        currentPosition += 1;
+        draw();
+        exceedLeftEdge = currentTetromino.some(index => (currentPosition + index) % rowHeight === rowHeight - 1);
+      }
+    } else if (isAtRightEdge) {
+      let exceedRightEdge = currentTetromino.some(index => (currentPosition + index) % rowHeight === 0);
+      while (exceedRightEdge) {
+        undraw();
+        currentPosition -= 1;
+        draw();
+        exceedRightEdge = currentTetromino.some(index => (currentPosition + index) % rowHeight === 0);
+      }
+    }
   }
 
   // show up-next tetromino in up-next display
@@ -265,15 +287,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // add event listener to start button
-  startBtn.addEventListener('click', () => {
+  // start game
+  document.addEventListener('keydown', e => {
+    if (e.keyCode === 32) {
+      handleStart();
+    }
+  })
+
+  function handleStart() {
     if (timerId) {
       clearInterval(timerId);
       timerId = null;
     } else {
       draw();
       gameStarted = true;
-      timerId = setInterval(moveDown, 1000);
+      timerId = setInterval(moveDown, interval);
       // selectUpNextTetromino = Math.floor(Math.random() * tetrominoes.length);
       displayNext(); 
       
@@ -287,7 +315,18 @@ document.addEventListener('DOMContentLoaded', () => {
         gameBoard.addEventListener('touchmove', handleSwipe);
       }
     }
-  })
+  }
+
+  // add event listener to start button
+  startBtn.addEventListener('click', handleStart);
+
+  function speedUp() {
+    clearInterval(timerId);
+    if (interval > 100) {
+      interval -= 150;
+    }
+    timerId = setInterval(moveDown, interval);
+  }
 
   // add score
   function addScore() {
@@ -295,7 +334,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const rows = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
   
       if (rows.every(index => cells[index].classList.contains('taken'))) {
-        score += 10;
+        score += 100;
+        counter++;
+        if (counter > 10) {
+          speedUp();
+          counter = 0;
+        }
         scoreBoard.innerHTML = score;
         rows.forEach(index => {
           // cells[index].classList.remove('taken');

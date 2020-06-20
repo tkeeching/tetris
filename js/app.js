@@ -139,9 +139,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstTouch = (e.touches || e.originalEvent.touches)[0];
     xDown = firstTouch.clientX;
     yDown = firstTouch.clientY;
+  }
 
-    if (!xDown || !yDown) rotate();
+  function handleTap(e) {
+    if (!xDown || !yDown) return;
+    
+    const xUp = e.touches[0].clientX;
+    const yUp = e.touches[0].clientY;
 
+    const xDiff = xDown - xUp;
+    const yDiff = yDown - yUp;
+
+    if (xDiff < 10 && yDiff < 10) rotate();
   }
 
   function handleSwipe(e) {
@@ -311,6 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // touch event handlers        
         gameBoard.addEventListener('touchstart', handleTouch);
         gameBoard.addEventListener('touchmove', handleSwipe);
+        gameBoard.addEventListener('touchend', handleTap);
       }
     }
   }

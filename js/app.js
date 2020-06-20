@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let gameStarted = false;
   let gamePaused = false;
   let interval = 1000;
+  let frozen = false;
 
   const lTetromino = [  
     [2, rowHeight, rowHeight+1, rowHeight+2], // [6, 14, 15, 16]
@@ -109,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // arrowUp key: 38
   // arrowRight key: 39
   // arrowDown key: 40
+  // d : 68
   let keyTimerId;
   let keyPressed = false;
   function control(e) {
@@ -124,6 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
       keyPressed = true;
       clearInterval(keyTimerId);
       keyTimerId = setInterval(moveDown, 50);
+    } else if (e.keyCode === 68) {
+      while (!frozen) {
+        moveDown();
+      }
     }
   }
 
@@ -150,9 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const xDiff = xDown - xUp;
     const yDiff = yDown - yUp;
 
-    if (Math.abs(Math.abs(xDiff) - Math.abs(yDiff)) < 5)  {
-      rotate();
-    } else if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
       if (xDiff > 0) { // swipe left
         moveLeft();
       } else { // swipe right
@@ -160,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       if (yDiff > 0) { // swipe up
-        // rotate();
+        rotate();
       } else { // swipe down
         moveDown();
       }
@@ -173,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectUpNextTetromino = 0;
   function freeze() {
     if (currentTetromino.some(index => cells[currentPosition + index + rowHeight].classList.contains('taken'))) {
+      frozen = true;
       currentTetromino.forEach(index => cells[currentPosition + index].classList.add('taken'))
       // start a new tetromino falling
       selectTetromino = selectUpNextTetromino;
@@ -183,6 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
       draw();
       displayNext();
       gameOver();
+    } else {
+      frozen = false;
     }
   }
 
@@ -319,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function speedUp() {
     clearInterval(timerId);
-    if (interval > 100) {
+    if (interval > 200) {
       interval -= 150;
     }
     timerId = setInterval(moveDown, interval);

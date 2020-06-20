@@ -342,12 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         scoreBoard.innerHTML = score;
         rows.forEach(index => {
-          // cells[index].classList.remove('taken');
-          // cells[index].classList.remove('ltetromino');
-          // cells[index].classList.remove('ttetromino');
-          // cells[index].classList.remove('ztetromino');
-          // cells[index].classList.remove('otetromino');
-          // cells[index].classList.remove('itetromino');
           cells[index].className = '';
         })
         const cellsRemoved = cells.splice(i, rowHeight);

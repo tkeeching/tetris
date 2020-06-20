@@ -141,18 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
     yDown = firstTouch.clientY;
   }
 
-  function handleTap(e) {
-    if (!xDown || !yDown) return;
-    
-    const xUp = e.touches[0].clientX;
-    const yUp = e.touches[0].clientY;
-
-    const xDiff = xDown - xUp;
-    const yDiff = yDown - yUp;
-
-    if (xDiff < 10 && yDiff < 10) rotate();
-  }
-
   function handleSwipe(e) {
     if (!xDown || !yDown) return;
 
@@ -162,7 +150,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const xDiff = xDown - xUp;
     const yDiff = yDown - yUp;
 
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    if (Math.abs(Math.abs(xDiff) - Math.abs(yDiff)) < 5)  {
+      rotate();
+    } else if (Math.abs(xDiff) > Math.abs(yDiff)) {
       if (xDiff > 0) { // swipe left
         moveLeft();
       } else { // swipe right
@@ -320,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // touch event handlers        
         gameBoard.addEventListener('touchstart', handleTouch);
         gameBoard.addEventListener('touchmove', handleSwipe);
-        gameBoard.addEventListener('touchend', handleTap);
       }
     }
   }

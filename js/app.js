@@ -315,11 +315,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // start game
   // keycodes
   // spacebar: 32
+  // m: 77
   document.addEventListener('keydown', e => {
     if (e.keyCode === 32) {
       handleStart();
+    } else if (e.keyCode === 77) {
+      handleAudio();
     }
   })
+
+
 
   function handleStart() {
     if (timerId) {

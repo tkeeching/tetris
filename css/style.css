@@ -187,4 +187,10 @@ main {
     background-position: center;
     overscroll-behavior: none;
   }
+
+  .start-btn:hover {
+    cursor: pointer;
+    color:white;
+    transition: all 0.3s ease-out;
+  }
 }

@@ -4,11 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const scoreBoard = document.querySelector('.score');
   const startBtn = document.querySelector('.start-btn');
   const rowHeight = 10;
+  const audio = document.querySelector('.bg-music');
+  const audioControl = document.querySelector('.control');
+  const audioOn = document.querySelector('.control-on');
+  const audioOff = document.querySelector('.control-off');
   let timerId = null;
   let score = 0;
   let counter = 0;
   let gameStarted = false;
   let gamePaused = false;
+  let gameFinished = false;
   let interval = 1000;
   let frozen = false;
 
@@ -293,7 +298,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function handleAudio() {
+    if (!audio.muted) {
+      audio.muted = true;
+      audioOn.classList.remove('control-active');
+      audioOff.classList.add('control-active');
+    } else {
+      audio.muted = false;
+      audioOff.classList.remove('control-active');
+      audioOn.classList.add('control-active');
+    }
+  }
+
   // start game
+  // keycodes
+  // spacebar: 32
   document.addEventListener('keydown', e => {
     if (e.keyCode === 32) {
       handleStart();
@@ -304,34 +323,57 @@ document.addEventListener('DOMContentLoaded', () => {
     if (timerId) {
       clearInterval(timerId);
       timerId = null;
+      gamePaused = true;
     } else {
       draw();
       gameStarted = true;
+      gamePaused = false;
       timerId = setInterval(moveDown, interval);
-      // selectUpNextTetromino = Math.floor(Math.random() * tetrominoes.length);
       displayNext(); 
-      
-      if (gameStarted && !gamePaused) {
-
-        document.addEventListener('keydown', control);
-        document.addEventListener('keyup', clear);
-        
-        // touch event handlers        
-        gameBoard.addEventListener('touchstart', handleTouch);
-        gameBoard.addEventListener('touchmove', handleSwipe);
-      }
     }
+
+    if (gameStarted && !gamePaused) {
+      audio.play();
+      audioOn.classList.add('control-active');
+      audioOff.classList.remove('control-active');
+      audioControl.addEventListener('click', handleAudio); 
+
+      document.addEventListener('keydown', control);
+      document.addEventListener('keyup', clear);
+      
+      // touch event handlers        
+      gameBoard.addEventListener('touchstart', handleTouch);
+      gameBoard.addEventListener('touchmove', handleSwipe);
+    } else {
+      audio.pause();
+      audioOff.classList.add('control-active');
+      audioOn.classList.remove('control-active');
+      audioControl.removeEventListener('click', handleAudio);
+
+      document.removeEventListener('keydown', control);
+      document.removeEventListener('keyup', clear);
+      
+      // touch event handlers        
+      gameBoard.removeEventListener('touchstart', handleTouch);
+      gameBoard.removeEventListener('touchmove', handleSwipe);
+    }
+    scoreBoard.innerHTML = score;
+    startBtn.innerHTML = gamePaused ? "Resume" : "Pause";
   }
 
   // add event listener to start button
   startBtn.addEventListener('click', handleStart);
+  startBtn.innerHTML = gameStarted ? "Pause" : "Start";
 
   function speedUp() {
     clearInterval(timerId);
-    if (interval > 200) {
+    if (interval > 400) {
       interval -= 150;
+    } else {
+      interval -= 50;
     }
     timerId = setInterval(moveDown, interval);
+    audio.playbackRate += 0.1;
   }
 
   // add score
@@ -359,6 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function gameOver() {
     if (currentTetromino.some(index => cells[currentPosition + index].classList.contains('taken'))) {
+      gameFinished = true;
       scoreBoard.innerHTML = 'game over';
       clearInterval(timerId);
       clearInterval(keyTimerId);
@@ -367,5 +410,13 @@ document.addEventListener('DOMContentLoaded', () => {
       document.removeEventListener('keyup', clear);
       gameBoard.removeEventListener('touchstart', handleTouch);
     }
+    startBtn.innerHTML = gameFinished ? "Game Over" : "Pause";
+    illuminateFinalPos();
   }
+
+  function illuminateFinalPos() {
+    const currTetro = [...currentTetromino];
+    console.log(currTetro);
+  }
+
 })

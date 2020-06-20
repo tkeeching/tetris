@@ -9,9 +9,9 @@
 </head>
 <body>
 
-  <audio controls="controls" loop="loop" autoplay="autoplay"><source src="./sound/tetris_theme.mp3"></audio>
+  <audio class="bg-music" loop="loop" autoplay="autoplay"><source src="./sound/tetris_theme.mp3"></audio>
   <div class="grid-container">
-    <button class="start-btn">Start / Pause</button>
+    <button class="start-btn"></button>
     <div class="score-board">
       <p>Score: </p>
       <p class="score"></p>
@@ -252,27 +252,9 @@
         <div class="taken"></div>
         <div class="taken"></div>
       </div>
-      <div class="up-next-display">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+      <div class="music-control">
+        <div class="title">Sound</div>
+        <div class="control"><span class="control-on">On</span>/<span class="control-off">Off</span></div>
       </div>
     </main>
   </div>

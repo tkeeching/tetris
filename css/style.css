@@ -128,6 +128,31 @@ main {
   border-radius: 3px;
 }
 
+.ltetromino-illuminate {
+  border: 1px solid orange;
+  border-radius: 3px;
+}
+
+.ttetromino-illuminate {
+  border: 1px solid teal;
+  border-radius: 3px;
+}
+
+.ztetromino-illuminate {
+  border: 1px solid violet;
+  border-radius: 3px;
+}
+
+.otetromino-illuminate {
+  border: 1px solid skyblue;
+  border-radius: 3px;
+}
+
+.itetromino-illuminate {
+  border: 1px solid brown;
+  border-radius: 3px;
+}
+
 
 /* music control */
 .music-control {
@@ -160,5 +185,6 @@ main {
     background-repeat: no-repeat;
     background-size: 100vh;
     background-position: center;
+    touch-action: none;
   }
 }

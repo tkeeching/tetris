@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let gameFinished = false;
   let interval = 1000;
   let frozen = false;
+  let illuminate = false;
+  let illuminatePos = 0;
 
   const lTetromino = [  
     [2, rowHeight, rowHeight+1, rowHeight+2], // [6, 14, 15, 16]
@@ -411,12 +413,6 @@ document.addEventListener('DOMContentLoaded', () => {
       gameBoard.removeEventListener('touchstart', handleTouch);
     }
     startBtn.innerHTML = gameFinished ? "Game Over" : "Pause";
-    illuminateFinalPos();
-  }
-
-  function illuminateFinalPos() {
-    const currTetro = [...currentTetromino];
-    console.log(currTetro);
   }
 
 })

@@ -69,7 +69,7 @@ main {
   grid-gap: 1px;
   place-items: center;
   width: 55px;
-  height: 44px;
+  height: 65px;
   background-color: rgba(30, 30, 30, 0.9);
   border: 3px solid rgba(128, 128, 128, 0.8);
   border-radius: 5px;
@@ -79,6 +79,14 @@ main {
 .up-next-display div {
   width: 10px;
   height: 10px;
+}
+
+.up-next-display .title-next {
+  grid-column: 1 / span 5;
+  margin: 0 auto;
+  font-family: 'Pacifico', cursive;
+  font-size: 0.7rem;
+  color: white;
 }
 
 

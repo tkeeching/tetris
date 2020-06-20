@@ -233,7 +233,12 @@ document.addEventListener('DOMContentLoaded', () => {
       tetrominoRotation = 0;
     }
     currentTetromino = tetrominoes[selectTetromino][tetrominoRotation];
-    draw();
+
+    if (currentTetromino.some(index => cells[currentPosition + index + rowHeight].classList.contains('taken'))) {
+      return;
+    } else {
+      draw();
+    }
 
     if (isAtLeftEdge) {
       let exceedLeftEdge = currentTetromino.some(index => (currentPosition + index) % rowHeight === rowHeight - 1);

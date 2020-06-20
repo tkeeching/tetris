@@ -185,6 +185,6 @@ main {
     background-repeat: no-repeat;
     background-size: 100vh;
     background-position: center;
-    touch-action: none;
+    overscroll-behavior: none;
   }
 }

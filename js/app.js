@@ -166,7 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (yDiff > 0) { // swipe up
         rotate();
       } else { // swipe down
-        moveDown();
+        while (!frozen) {
+          moveDown();
+        }
       }
     }
 

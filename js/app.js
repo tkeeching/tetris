@@ -139,6 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstTouch = (e.touches || e.originalEvent.touches)[0];
     xDown = firstTouch.clientX;
     yDown = firstTouch.clientY;
+
+    if (!xDown || !yDown) rotate();
+
   }
 
   function handleSwipe(e) {
@@ -151,15 +154,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const yDiff = yDown - yUp;
 
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
-      if (xDiff > 0) {
+      if (xDiff > 0) { // swipe left
         moveLeft();
-      } else {
+      } else { // swipe right
         moveRight();
       }
     } else {
-      if (yDiff > 0) {
-        rotate();
-      } else {
+      if (yDiff > 0) { // swipe up
+        // rotate();
+      } else { // swipe down
         moveDown();
       }
     }
@@ -248,11 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
     [7, 8, 11, 12],
     [7, 8, 12, 13],
     [11, 12, 13, 14]
-    // tetrominoes[0][0],
-    // tetrominoes[1][0],
-    // tetrominoes[2][0],
-    // tetrominoes[3][0],
-    // tetrominoes[4][0]
   ]
 
   // display tetromino in up next display
